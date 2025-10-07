@@ -1,0 +1,455 @@
+  <!doctype html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HERizon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root{
+        --bg:#E2B4C1;
+        --primary:#111827;
+        --accent:#F7DAE7;
+        --muted:#6b7280;
+        --card:#ffffff;
+        --max-width:1100px;
+      }
+      *{box-sizing:border-box;margin:0;padding:0}
+      body{
+        font-family:Inter,system-ui,Roboto;
+        background:linear-gradient(180deg,#F7DAE7 0%, #F7DAE7  100%);
+        color:#111827;
+
+      }
+
+      /* ---------- Splash ---------- */
+      #splash{
+        position:fixed;top:0;left:0;right:0;bottom:0;
+        background:linear-gradient(135deg,var(--bg),var(--accent));
+        display:flex;flex-direction:column;justify-content:center;align-items:center;
+        z-index:9999;transition:opacity 1s ease;
+        overflow:hidden;
+      }
+      #splash h1{color:white;font-size:40px;font-weight:800;margin-bottom:16px;text-align:center}
+      #splash p{color:white;font-size:18px;text-align:center;max-width:500px;margin-bottom:24px}
+      #enter-btn{
+        background:white;color:var(--primary);padding:12px 20px;border-radius:10px;
+        font-weight:700;cursor:pointer;border:none;transition:0.3s;transform:scale(1)
+      }
+      #enter-btn:hover{background:var(--accent);color:#ffffff;transform:scale(1.1)}
+
+      .circle{
+        position:absolute;border-radius:50%;opacity:0.5;
+        animation:pulse 6s infinite ease-in-out;
+        transition:transform 0.3s, background: 0.3s;
+      }
+      .circle.small{width:40px;height:40px;background:#fff3}
+      .circle.medium{width:80px;height:80px;background:#fff5}
+      .circle.large{width:120px;height:120px;background:#fff2}
+      .circle:hover{background:#fff8;transform:scale(1.3)}
+      @keyframes pulse{
+        0%,100%{transform:scale(1)}
+        50%{transform:scale(1.2)}
+      }
+
+      .container{max-width:var(--max-width);margin:0 auto;padding:28px;display:none;position:relative;z-index:1}
+      header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+      .brand{display:flex;align-items:center;gap:12px}
+      .logo{width:52px;height:52px;border-radius:12px;
+        background:linear-gradient(135deg,var(--bg),var(--accent));
+        display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px
+      }
+      nav{display:flex;gap:12px;align-items:center}
+      a.btn,a.ghost{
+        padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;transition:transform 0.2s
+      }
+      a.btn{background:var(--primary);color:#fff}
+      a.ghost{background:transparent;border:2px solid var(--primary);color:var(--primary)}
+      a.btn:active,a.ghost:active{transform:scale(0.95)}
+
+      section{margin:48px 0;opacity:0;transform:translateY(40px);transition:all 0.8s ease-out}
+      section.visible{opacity:1;transform:translateY(0)}
+      h2{margin-bottom:16px;color:var(--primary)}
+
+      .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .feature-card{
+        background:var(--card);padding:18px;border-radius:14px;
+        box-shadow:0 8px 30px rgba(15,23,42,0.06);
+        transition:transform 0.3s;
+        display:block;
+        text-decoration:none;
+        color:#111827;
+        font-weight:600;
+      }
+      .feature-card:hover{transform:scale(1.05);color:var(--primary)}
+
+      #hero{
+        text-align:center;padding:80px 20px;border-radius:16px;
+        background:linear-gradient(rgba(255,255,255,0.6),rgba(255,255,255,0.6)),
+          url('https://media.licdn.com/dms/image/v2/D4D12AQGpDgBG2YuLXg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1678282108860?e=2147483647&v=beta&t=EwC8oaEA5LlHNJsDf3-tLeVMNyFj3VXQT4H62NsYbWA');
+        background-size:cover;background-position:center;
+      }
+      #hero h1{font-size:42px;font-weight:800;color:var(--primary)}
+      #hero p{max-width:600px;margin:16px auto;font-size:18px;color:#111827}
+      #hero .actions{margin-top:24px;display:flex;justify-content:center;gap:12px}
+
+      .story-card{
+        background:#fff;padding:16px;border-radius:12px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.06);
+        transition:transform 0.3s;
+      }
+      .story-card:hover{transform:scale(1.05)}
+      .story-card a{text-decoration:none;color:var(--primary);font-weight:700}
+
+      footer{margin-top:36px;padding:20px 0;border-top:1px solid rgba(15,23,42,0.06);color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+      .orb{
+        position:fixed;border-radius:50%;opacity:0.15;
+        background:radial-gradient(circle,var(--primary),transparent);
+        animation:float 20s linear infinite;
+        z-index:0;
+      }
+      .orb.one{width:300px;height:300px;top:10%;left:5%}
+      .orb.two{width:200px;height:200px;bottom:15%;right:10%}
+      .orb.three{width:150px;height:150px;top:60%;left:50%}
+      @keyframes float{
+        0%{transform:translateY(0)}
+        50%{transform:translateY(-40px)}
+        100%{transform:translateY(0)}
+      }
+
+      @media (max-width:900px){
+        .grid-2{grid-template-columns:1fr}
+        nav{display:none}
+      }
+
+      .team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .person {
+    background: #fff;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    width: 220px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .person:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .person img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .person h4 {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    color: #062f4f;
+  }
+
+  .role {
+    font-size: 0.85rem;
+    color: #214;
+  }
+
+   .resource{
+      background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.05);
+      display:flex;justify-content:space-between;align-items:center;margin-bottom:12px
+    }
+
+    .contact h2 { text-align:left;border-radius:16px;s
+      
+    } 
+
+    .contact p {margin-top: 0
+    width: 100%;
+    padding: 2em 0 1em 3em;
+    background-color:#F7DAE7;
+    color: #111827;
+    border-top: 2px solid #FFC107;
+}
+
+
+    </style>
+  </head>
+
+  <body>
+    <!-- Splash -->
+    <div id="splash">
+      <div class="circle small" style="top:10%;left:20%"></div>
+      <div class="circle medium" style="top:40%;left:70%"></div>
+      <div class="circle large" style="bottom:20%;right:30%"></div>
+      <h1>Welcome to HERizon</h1>
+      <p>Celebrating women’s strength, voices, and opportunities. Join us in uplifting stories, resources, and events.</p>
+      <button id="enter-btn">Enter HERizon</button>
+    </div>
+
+    <!-- Main -->
+    <div class="container" id="main-site">
+      <header>
+        <div class="brand">
+          <div class="logo">HR</div>
+          <div>
+            <div style="font-weight:700">HERizon</div>
+            <div style="font-size:12px;color:var(--muted)">Empowering Women</div>
+          </div>
+        </div>
+        <nav>
+          <a href="#hero" class="ghost">Home</a>
+          <a href="#campaigns" class="ghost">Campaigns</a>
+          <a href="#articles" class="ghost">Articles</a>
+          <a href="#resources" class="ghost">Resources</a>
+          <a href="#events" class="ghost">Events</a>
+          <a href="#stories" class="btn">Stories</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <h1>Empowering Women, Inspiring Change</h1>
+        <p>Together, we celebrate women’s strength, share their stories, and provide resources to uplift every journey.</p>
+      </section>
+
+       <video src="video\Women Who Empower - Teaser.mp4" width="1000"  controls >
+
+    </video>
+
+
+    <section id="WHO WE ARE">
+        <h2>WHO WE ARE</h2>
+        <div class="#hero">
+          <a href="#" class="feature-card">
+             HERIZON is committed to supporting the efforts of grassroots women, advocates, civil society organizations, educators, and youth leaders who strive to promote women’s empowerment and gender equality. It aims to build a peaceful, inclusive, and progressive society where women are respected, valued, and given equal opportunities to lead and thrive. HERIZON upholds the genuine principles of collaboration, integrity, and social responsibility in all its initiatives. It is an independent organization, neither politically aligned nor under the authority of any political or corporate entity.
+          </a>
+          
+          </a>
+        </div>
+      </section>
+
+
+
+      <!-- Campaigns -->
+      <section id="campaigns">
+        <h2>Featured Campaigns</h2>
+        <div class="grid-2">
+          <a href="https://freshstartwomen.org/quick-start-career-training/" target="_blank" class="feature-card">
+            🌸 Community Skills Training
+          </a>
+          <a href="https://www.scholarships.com/financial-aid/college-scholarships/scholarships-by-type/scholarships-for-women" target="_blank" class="feature-card">
+            📚 Scholarship for Girls
+          </a>
+        </div>
+      </section>
+
+      <!-- Articles -->
+      <section id="articles">
+        <h2>Articles & Blogs</h2>
+        <div class="stories-grid">
+          <div class="story-card">
+            <a href="https://www.philstar.com/business/2025/03/09/2426884/women-leading-way-breaking-barriers-philippines-banking-finance" target="_blank">
+              <strong>Breaking Gender Barriers</strong><br>
+              Women leading the way in the Philippines’ banking and finance sector.
+            </a>
+          </div>
+          <div class="story-card">
+            <a href="https://www.trihealth.com/blogs/womens-health/embracing-health-at-every-age" target="_blank">
+              <strong>Health & Wellness for Women</strong><br>
+              Embracing health at every age — mind, body, and spirit.
+            </a>
+          </div>
+          <div class="story-card">
+            <a href="https://m2comms.com/2025/05/20/women-entrepreneurs-in-the-philippines/" target="_blank">
+              <strong>The Rise of Women Entrepreneurs</strong><br>
+              Empowering women to lead businesses and drive innovation.
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="resources">
+      <h2>Resources</h2>
+      <div class="resource"><div><strong>Women's Health Hotline</strong></div><a class="ghost" href="https://womenshealth.gov/contact-us" target="_blank">Visit</a></div>
+      <div class="resource"><div><strong>Microgrant Directory</strong></div><a class="ghost" href="https://ambergrantsforwomen.com/get-an-amber-grant/" target="_blank">Explore</a></div>
+      <div class="resource"><div><strong>Legal Aid Network</strong></div><a class="ghost" href="https://www.legalaidnetwork.org/who-we-are.html" target="_blank">Learn</a></div>
+    </section>
+
+      <!-- Stories -->
+      <section id="stories">
+        <h2>Inspiring Stories</h2>
+        <div class="stories-grid">
+          <div class="story-card">
+            <a href="https://www.philstar.com/lifestyle/2025/07/12/2457259/empoweredwomen-lead-theway" target="_blank">
+              <strong>*Empowered women lead the way</strong><br>
+              A powerhouse panel of inspiring women leaders namely, Kaiser International Health Group president and medical director Dr. Leah Yolo, Beauty Re/Store co-owner Mikaela Lagdameo, Organique Inc. director of operations Martina Salimbangon, and Bikram Yoga Makati owner Ollay Aninion, topbilled the session on beauty, wellness, nutrition, and mental health, as part of the third Women Lead Conference hosted by the Italian Chamber of Commerce in the Philippines, Inc. (ICCPI).
+            </a>
+            <p>click to read more.</p>
+          </div>
+          <div class="story-card">
+            <a href="https://philippineculturaleducation.com.ph/melchora-aquino/" target="_blank">
+              <strong>*Melchora Aquino – Ang Ina ng Rebolusyon</strong><br>
+              Kilala bilang “Tandang Sora,” gumanap ng mahalagang papel si Melchora Aquino sa Rebolusyong Pilipino laban sa pamamahala ng mga Espanyol. Sa edad na marami ang umatras sa tahimik na pagreretiro, sa halip ay inialay niya ang sarili sa layunin, na nagbibigay ng pagkain, tulong medikal, at tirahan sa mga sugatang rebolusyonaryo. Ang kanyang tahanan ay naging kanlungan ng mga sundalong lumalaban para sa kalayaan, na sumasalamin sa diwa ng isang tunay na ina—hindi lamang sa kanyang mga anak kundi sa isang buong bansa.
+            </a>
+          </div>
+          <div class="story-card">
+            <a href="https://www.philstar.com/business/2025/07/20/2459197/filipina-led-group-shines-bright-global-agriculture-stage?fbclid=IwY2xjawNR8GNleHRuA2FlbQIxMABicmlkETFraUNjSnRncEFSczZBU1c2AR6YZiDyWGVbFpWF3dM-f2tvV2h05V5PNSTChhskabE6uhwKNt9MsCVgFPeueA_aem_BDJ4Has9C02VETI1KmewEA" target="_blank">
+              <strong>*Inspiring Story of Robyn Mijares: Empowering Women & Youth Through Agriculture</strong><br>
+              Robyn Camilla Mijares is a young Filipina determined to bridge the gap between opportunity and potential. As the Founder and Executive Director of Grow School Philippines and Youth Uprising, she has turned her passion for sustainability into tangible programs that empower women, youth, and entire communities.
+            </a>
+          </div>
+           <div class="story-card">
+            <a href="https://pia.gov.ph/news/luzon/mindoro-single-mom-uses-4ps-as-stepping-stone-to-success/?fbclid=IwY2xjawNR8S9leHRuA2FlbQIxMABicmlkETFraUNjSnRncEFSczZBU1c2AR4Zj0hJ5ZA2cOIMwcrETvRewfP2dB2A0cqvHl-_Ca45zjbf0afaEtaqzqyZVQ_aem_xX52DOPR5XqoaeRit41wjA" target="_blank">
+              <strong>*Marilyn Martirez — From Struggles to Success</strong><br>
+              When Marilyn lost her husband in 2014, she suddenly became the sole provider for her five children. With little savings and great responsibility, she could have given up — but she chose courage instead. Through the government’s Pantawid Pamilyang Pilipino Program (4Ps), she ensured her children stayed in school and participated actively in community work.            </a>
+        </div>
+        <div class="story-card">
+            <a href="https://pia.gov.ph/news/luzon/mindoro-single-mom-uses-4ps-as-stepping-stone-to-success/?fbclid=IwY2xjawNR8S9leHRuA2FlbQIxMABicmlkETFraUNjSnRncEFSczZBU1c2AR4Zj0hJ5ZA2cOIMwcrETvRewfP2dB2A0cqvHl-_Ca45zjbf0afaEtaqzqyZVQ_aem_xX52DOPR5XqoaeRit41wjA" target="_blank">
+              <strong>*EDNA — The Solo Parent Who Never Gave Up</strong><br>
+              Raising eight children alone was never easy for Edna, but her willpower turned challenges into opportunities. Despite limited income, she found ways to provide for her family, often working long hours and helping neighbors in need.
+
+Through the DSWD Sustainable Livelihood Program, Edna received financial capital that she used to start a small sari-sari store. Over time, her small business grew, supporting her children’s education and improving their quality of life. Today, Edna also serves as a Parent Leader, guiding other families to access support and rebuild their lives.
+            </a>
+        </div>
+      </section>
+
+  <section class="content">
+      <h2>Our Team</h2>
+      <div class="team">
+
+        <div class="person">
+          <img src="images\4698fd0d-85ac-40d8-8555-a16636c11ada.jpg" alt="Photo placeholder">
+          <h4>Jonhryl Barbon</h4>
+          <div>Group Leader</div>
+        </div>
+
+        <div class="person">
+          <img src="images\813260de-d49f-4b53-9adf-d27593ad18d2.jpg" alt="Photo placeholder">
+          <h4>Lyka Duquinlay</h4>
+          <div>Assistant Group Leader</div>
+        </div>
+
+        <div class="person">
+          <img src="images\553931436_1489182552133800_4087948684598240116_n.jpg" alt="Photo placeholder">
+          <h4>Tristan Aiden Cortez</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\554782569_737869855958106_6634663668895873494_n.jpg" alt="Thomas Kyle Galo">
+          <h4>Thomas Kyle Galo</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\554952929_1481840069691355_8686173505268038362_n.jpg" alt="Photo placeholder">
+          <h4>Kenneth Gua-an</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\557632683_732629169792469_1186785603707050810_n.jpg" alt="Photo placeholder">
+          <h4>Kyla Caberte</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\554241502_1547665203075336_7098845398332206443_n.jpg" alt="Photo placeholder">
+          <h4>Rica Obogon</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\554330138_1174506351222910_350485149348580090_n.jpg" alt="Photo placeholder">
+          <h4>Thresha Cantarona</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\554197599_1530386374803466_1731658657658985242_n.jpg" alt="Photo placeholder">
+          <h4>Fevyjane Acaso</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\551122818_1845786189454252_3175399930944171710_n.jpg" alt="Photo placeholder">
+          <h4>Gretchielou Quilang</h4>
+          <div>Member</div>
+        </div>
+
+        <div class="person">
+          <img src="images\77aa857a-390e-4ac4-907b-503acf1fcfb9.jpg" alt="Pshych Calenada">
+          <h4>Pshych Calenada</h4>
+          <div>Member</div>
+        </div>
+
+      <section id="contact">
+                <div class="contact">
+      <h2>Contact Us</h2>
+     <p> Mr. Jonhryl Barbon</p> 
+     <p>Incharge of handling who needs our service.</p>
+    <p>Email:Kasaysayangroup3@gmail.com</p>
+    <div class="social-buttons">
+     <p>Facebook: <a href="https://www.facebook.com/johnryl.barbon" target="_blank">Jonhryl Barbon</a></p>
+     <p>Intagram:<a href="https://www.instagram.com/jeyoh_en/"  target="_blank">Jonhryl Barbon</a></p>
+      <p>Cellphone Number: 09647375318</p>
+    </section>
+    </div> 
+    
+      <secton id="mission">
+    <div class="mission">
+        <h2>Our Mission</h2>
+        <p>HERizon’s mission is to empower women through education, opportunity, and storytelling—creating a future where every woman can lead, inspire, and thrive without limits.</p>
+      </section>
+      </div>
+      <footer>
+        <div>&copy; 2025 HERizon — All rights reserved.</div>
+      </footer>
+    </div>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+    <script>
+      document.getElementById('enter-btn').addEventListener('click',()=>{
+        document.getElementById('splash').style.opacity='0';
+        setTimeout(()=>{
+          document.getElementById('splash').style.display='none';
+          document.getElementById('main-site').style.display='block';
+          revealSections();
+        },1000);
+      });
+
+      document.addEventListener('mousemove',e=>{
+        document.querySelectorAll('.circle').forEach(c=>{
+          const speed=c.classList.contains('small')?20:c.classList.contains('medium')?40:60;
+          const x=(window.innerWidth/2 - e.pageX)/speed;
+          const y=(window.innerHeight/2 - e.pageY)/speed;
+          c.style.transform=`translate(${x}px,${y}px)`;
+        });
+      });
+
+      function revealSections(){
+        const observer=new IntersectionObserver(entries=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){entry.target.classList.add('visible');}
+          });
+        },{threshold:0.2});
+        document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
+      }
+    </script>
+  </body>
+  </html>
+
+
